@@ -1,0 +1,169 @@
+{% extends 'user/index.html' %}
+
+{% block content %}
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
+<style>
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active
+        {
+        -webkit-box-shadow: 0 0 0 30px rgb(255, 255, 255) inset !important;
+        }
+    .form-control{
+        border-radius: 3em;
+        width: 100%;
+        background-color: rgb(41, 41, 41);  
+        border-color: lightgreen;
+        margin-bottom: 1em;
+    }
+    
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+        <div class="header">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="#">Fanconvo</a>
+                  <div>
+                    <ul style="display: flex;" class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a style="text-decoration: none; color: white; font-size: 0.7em;" class="nav-link" href="#">Sign Up</a>
+                      </li>
+                      <li class="nav-item">
+                        <a style="text-decoration: none; color: white; font-size: 0.7em" class="nav-link" href="#">Login</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+        </div>
+        <div class="form-div" style="background-color: rgb(41, 41, 41); border-radius: 1em; padding-left: 20%; padding-right: 20%; padding-top: 2em;">
+            <div class="container">
+                
+            <div class="buttons rounded-pill p-1" style="background-color: black; width: fit-content; margin: 0 auto; display: flex;">
+                <a type="button" onclick="getFanForm()" id="fan-button" style="background-color: lightgreen; font-size: 0.7em;" class="btn rounded-pill text-white">FAN SIGNUP</a>
+                <a type="button" onclick="getTalentForm()" id="talent-button" style="font-size: 0.7em;" class="btn rounded-pill text-white">TALENT SIGNUP</a>
+            </div>
+            <div id="headline" class="h5 text-white text-center mt-5">CREATE YOUR FAN ACCOUNT</div>
+            <form class="text-white" id="fan-form" method="POST" style="margin-top: 3em;" action="{% url 'fan-sign-up' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="first-name">First name*</label>
+                  <input type="text" class="form-control" placeholder="First name" name="first-name" id="first-name" maxlength="10" required>
+                </div>
+                <div class="form-group">
+                  <label for="last-name">Last name*</label>
+                  <input type="text" class="form-control" placeholder="Last name" id="last-name" name=last-name maxlength="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username*</label>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <small class="text-danger">{{ message }}</small>
+                    {% endfor %}
+                {% endif %}
+                    <input type="text" class="form-control" placeholder="Username" id="username" name=username maxlength="20" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" class="form-control" placeholder="Email" id="email" name=email required>
+                  </div>
+                  <div class="form-group">
+                    <label for="timezone">Timezone*</label>
+                    <select class="form-control text-white" name="timezone" id="timezone" required>
+                    <option value="PST8PDT-6am">PST8PDT-6am</option>
+                    <option value="PST8PDT-6am">PST8PDT-6am</option>
+                    </select>
+                  </div>
+                  <!-- <select name="timezone">
+                    {% for tz in timezones %}
+                    <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Set"> -->
+                  <div class="form-group">
+                    <label for="password">Password*</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="18" minlength="8" required>
+                  </div>
+                <div class="form-group form-check">
+                  <label class="form-check-label text-center">
+                    <input class="form-check-input" style="background-color: lightgreen;" type="checkbox" required> I agree to the <span style="color: green;">Terms and Conditions</span>
+                  </label>
+                </div> 
+                <button type="submit" style="background-color: lightgreen;" class="btn rounded-pill">SIGN UP</button> <br>
+                <small>Already have an account? <span>Login</span></small>
+              </form>
+              <form class="text-white" id="talent-form" style="display: none; margin-top: 3em;" method="POST" action="{% url 'talent-sign-up' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="first-name">First name*</label>
+                  <input type="text" class="form-control" placeholder="First name" name="first-name" id="first-name" maxlength="10" required>
+                </div>
+                <div class="form-group">
+                  <label for="last-name">Last name*</label>
+                  <input type="text" class="form-control" placeholder="Last name" id="last-name" name=last-name maxlength="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username*</label>
+                    <input type="text" class="form-control" placeholder="Username" id="username" name=username maxlength="20" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" class="form-control" placeholder="Email" id="email" name=email required>
+                  </div>
+                  <div class="form-group">
+                    <label for="timezone">Timezone*</label>
+                    <select class="form-control text-white" name="timezone" id="timezone" required>
+                    <option value="PST8PDT-6am">PST8PDT-6am</option>
+                    <option value="PST8PDT-6am">PST8PDT-6am</option>
+                    </select>
+                  </div>
+                  <!-- <select name="timezone">
+                    {% for tz in timezones %}
+                    <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Set"> -->
+                  <div class="form-group">
+                    <label for="password">Password*</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="18" minlength="8" required>
+                  </div>
+                  <div style="align-items: center;">
+                <div class="form-group form-check text-center">
+                  <label class="form-check-label">
+                    <input style="background-color: lightgreen;" class="form-check-input" type="checkbox" required> I agree to the <span style="color: green;">Terms and Conditions</span>
+                  </label>
+                </div>
+                <button type="submit" style="background-color: lightgreen;" class="btn rounded-pill">SIGN UP</button> <br>
+                <small>Already have an account? <span>Login</span></small>
+            </div>
+        </div>
+              </form>
+            </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    function getFanForm() {
+        $('#talent-form').hide()
+        $('#fan-form').show()
+        $('#fan-button').css('background-color', 'lightgreen')  
+        $('#talent-button').css('background-color', 'lightgreen')
+        $('#talent-button').css('background-color', 'black')
+
+        $('#headline').html('CREATE YOUR FAN ACCOUNT')
+    }
+    function getTalentForm() {
+        $('#fan-form').hide()
+        $('#talent-form').show()
+        $('#talent-button').css('background-color', 'lightgreen')
+        $('#fan-button').css('background-color', 'black')
+        $('#headline').html('CREATE YOUR TALENT ACCOUNT')
+    }
+</script>
+{% endblock %}

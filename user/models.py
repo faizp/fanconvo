@@ -6,3 +6,4 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     timezone = models.CharField(max_length = 24)
+    is_talent = models.BooleanField(default=True)
