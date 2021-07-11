@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('user.urls')),
 
     #REST URLS
-    path('api/user/', include('user.api.urls', 'user_api')),
+    path('api/1.0/', include('user.api.urls', 'user_api')),
 
     #SWAGGER 
     path('api-view/', schema_view),

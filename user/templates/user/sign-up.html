@@ -3,31 +3,33 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 mx-auto">
+            <!-- header starts -->
             <div class="header mb-3">
                 <nav class="navbar navbar-expand-lg" style="display: flex; justify-content: space-between;">
                     <h1 style="color: #13d664; font-family: 'Poppins', sans-serif;">Fanconvo</h1>
                     <div>
-                        <ul style="display: flex;" class="navbar-nav mb-2 mb-lg-0">
-                            <a style="text-decoration: none; color: white; font-size: 0.7em;" class="nav-link"
-                                href="#">Sign Up</a>
-                            <a style="text-decoration: none; color: white; font-size: 0.7em" class="nav-link"
-                                href="#">Login</a>
+                        <ul style="display: flex;" class="mb-2 mb-lg-0">
+                            <a class="nav-link" href="#">Sign Up</a>
+                            <a class="nav-link" href="#">Login</a>
                         </ul>
                     </div>
                 </nav>
+
                 <div style="font-size: 0.8em;" class="text-white">A marketplace for conversations, mentorship and
                     performance</div>
+
+                    <!-- search bar -->
                 <div class="text-white mt-3 searchBar">Search New Talent <input type="text"
                         id="searchQueryInput"><button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
                         <i style="color: #13d664;" class="bi bi-search"></i>
                     </button>
-
                 </div>
             </div>
-            <div class="form-div"
-                style="background-color: rgb(41, 41, 41); border-radius: 1em; padding-left: 20%; padding-right: 20%; padding-top: 2em; padding-bottom: 2em;">
-                <div class="container">
-
+            <!-- header ends -->
+            <!-- form container -->
+            <div class="form-div">
+                <div style="max-width: 60%;" class="container">
+                    <!-- form switching buttons -->
                     <div class="buttons rounded-pill p-1"
                         style="background-color: black; width: fit-content; margin: 0 auto; display: flex;">
                         <a type="button" onclick="getFanForm()" id="fan-button"
@@ -37,6 +39,8 @@
                             class="btn rounded-pill text-white">TALENT SIGNUP</a>
                     </div>
                     <div id="headline" class="h5 text-white text-center mt-5">CREATE YOUR FAN ACCOUNT</div>
+                    
+                    <!-- Fan account form starts -->
                     <form class="text-white" id="fan-form" style="margin-top: 3em;">
                         {% csrf_token %}
                         <div class="form-group">
@@ -72,26 +76,24 @@
                             <input type="password" class="form-control" id="fanPassword" name="fanPassword"
                                 placeholder="Password" maxlength="18" minlength="8" required>
                         </div>
+
                         <div class="row">
-                            <div style="justify-content: center;">
-                                <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input style="background-color: #13d664;" name="fanCheckbox"
-                                            class="form-check-input" type="checkbox" required> I agree to the <span
-                                            style="color: #13d664;">Terms and Conditions</span>
-                                    </label>
-                                </div>
+                            <div class="text-center">
+                                <label style="width: 100%;">
+                                    <input style="background-color: #13d664;" name="fanCheckbox"
+                                        class="form-check-input" type="checkbox" required> I agree to the <span
+                                        style="color: #13d664;">Terms and Conditions</span>
+                                </label>
                                 <button type="button" onclick="fanSignup()"
                                     style="background-color: #13d664; width: 70%" class="btn rounded-pill">SIGN
-                                    UP</button> <br>
-                                <small style="font-size: 0.7em; ">Already have an account? <span
-                                        style="color: #13d664;">Login</span></small>
+                                    UP</button>
+                                <div style="font-size: 0.7em; ">Already have an account? <span
+                                        style="color: #13d664;">Login</span></div>
                             </div>
                         </div>
                     </form>
-
-
-                    <!-- talent form -->
+                    <!-- fan form ends -->
+                    <!-- talent form starts -->
                     <form class="text-white" id="talent-form" style="display: none; margin-top: 3em;">
                         {% csrf_token %}
                         <div class="form-group">
@@ -129,33 +131,32 @@
                                 placeholder="Password" maxlength="18" minlength="8" required>
                         </div>
                         <div class="row">
-                            <div style="justify-content: center;">
-                                <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input style="background-color: #13d664;" name="talentCheckbox"
-                                            class="form-check-input" type="checkbox" required> I agree to the <span
-                                            style="color: #13d664;">Terms and Conditions</span>
-                                    </label>
-                                </div>
+                            <div class="text-center">
+                                <label style="width: 100%;">
+                                    <input style="background-color: #13d664;" name="talentCheckbox"
+                                        class="form-check-input" type="checkbox" required> I agree to the <span
+                                        style="color: #13d664;">Terms and Conditions</span>
+                                </label>
                                 <button type="button" onclick="talentSignup()"
                                     style="background-color: #13d664; width: 70%" class="btn rounded-pill">SIGN
-                                    UP</button> <br>
-                                <small style="font-size: 0.7em; ">Already have an account? <span
-                                        style="color: #13d664;">Login</span></small>
+                                    UP</button>
+                                <div style="font-size: 0.7em; ">Already have an account? <span
+                                        style="color: #13d664;">Login</span></div>
                             </div>
                         </div>
-
                     </form>
+                    <!-- talent form ends -->
                 </div>
             </div>
 
+            <!-- footer starts -->
             <div class="footer-div">
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-5">
                         <h1 style="color: #13d664;font-family: 'Poppins', sans-serif;">Fanconvo</h1>
                     </div>
                     <div class="col-3">
-                        <small style="font-size: small;">How fanconvo works?</small>
+                        <small class="mt-2" style="font-size: small;">How fanconvo works?</small>
                     </div>
                     <div class="col-2">
                         <small style="font-size: small;">Terms of use</small>
@@ -169,6 +170,7 @@
             <div class="text-center">
                 <small style="font-size: small;">© 2020 fanconvo</small>
             </div>
+            <!-- footer ends -->
         </div>
     </div>
 </div>

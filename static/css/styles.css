@@ -21,9 +21,8 @@ input[type=password]:focus {
     color: white;
 }
 
-select:focus {
+select:active {
     background-color: rgb(41, 41, 41);
-    color: white;
 }
 
 label {
@@ -68,4 +67,20 @@ label {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+
+.form-div{
+    background-color: rgb(41, 41, 41);
+    border-radius: 1em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.nav-link{
+    text-decoration: none; 
+    color: white; 
+    font-size: 0.7em; 
+    padding: 0; 
+    margin-left: 5px;
 }

@@ -11,6 +11,7 @@ def index(request):
     return render(request, 'user/sign-up.html', {'timezones': pytz.common_timezones})
 
 
+# fan account sign up method
 def fan_sign_up(request):
     if request.method == 'POST':
         first_name = request.POST['fanFirstname']
@@ -27,6 +28,7 @@ def fan_sign_up(request):
         return JsonResponse('true', safe=False)
 
 
+# talent account signup method 
 def talent_sign_up(request):
     if request.method == 'POST':
         first_name = request.POST['talentFirstname']
