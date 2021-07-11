@@ -30,51 +30,6 @@ class UserViewSchema(AutoSchema):
             return manual_fields + extra_fields
 
 
-# class UserCollection(APIView):
-
-#     schema = UserViewSchema()
-
-#     def get(self, request):
-#         try:
-#             user = User.objects.all()
-#             profile = Profile.objects.all()
-#         except User.DoesNotExist:
-#             return Response(status=status.HTTP_404_NOT_FOUND)
-
-    
-#         if request.method == 'GET':
-#             serializer = UserSerializer(user, many=True)
-#             serializer2 = ProfileSerializer(profile, many=True)
-#             return Response(serializer.data+serializer2.data)
-
-#     def post(self, request):    
-#         if request.method == 'POST':
-#             username = request.data['username']
-            
-#             if User.objects.filter(username=username).exists():
-#                 return Response(f'username {username} already exists')
-            
-#             first_name = request.data['first_name']
-#             last_name = request.data['last_name']
-#             password = request.data['password']
-#             timezone = request.data['timezone']
-
-#             if len(password) not in range(4,20):
-#                 return Response(f'Entered password is not valid. password length should be in between 4 and 20')
-
-#             email = request.data['email']
-
-#             try:
-#                 validate_email(email)
-#             except ValidationError as e:
-#                 return Response("Enter valid email address")
-
-            
-            
-#             user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
-#             Profile.objects.create(user=user, timezone=timezone, is_talent=True)
-#             return Response(status=status.HTTP_201_CREATED)
-
 class FanCollection(APIView):
 
     schema = UserViewSchema()

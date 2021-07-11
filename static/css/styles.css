@@ -1,0 +1,67 @@
+.form-control {
+    border-radius: 3em;
+    width: 100%;
+    background-color: rgb(41, 41, 41);
+    border-color: #13d664;
+    color: white;
+}
+
+input[type=text]:focus {
+    background-color: rgb(41, 41, 41);
+    color: white;
+}
+
+input[type=email]:focus {
+    background-color: rgb(41, 41, 41);
+    color: white;
+}
+
+input[type=password]:focus {
+    background-color: rgb(41, 41, 41);
+    color: white;
+}
+
+select:focus {
+    background-color: rgb(41, 41, 41);
+    color: white;
+}
+
+label {
+    font-size: 0.7em;
+    margin-top: 1em;
+}
+
+.errors {
+    color: red;
+    font-family: cursive;
+}
+
+#searchQueryInput {
+    width: 100%;
+    height: 2.8rem;
+    background: black;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
+}
+
+#searchQuerySubmit {
+    width: 3.5rem;
+    height: 2.8rem;
+    margin-left: -3.5rem;
+    background: black;
+    border: none;
+    outline: none;
+}
+
+#searchQuerySubmit:hover {
+    cursor: pointer;
+}
+.searchBar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
