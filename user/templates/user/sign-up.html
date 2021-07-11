@@ -4,147 +4,255 @@
 {% load tz %}
 {% get_current_timezone as TIME_ZONE %}
 <style>
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus, 
-        input:-webkit-autofill:active
-        {
-        -webkit-box-shadow: 0 0 0 30px rgb(255, 255, 255) inset !important;
-        }
-    .form-control{
+    .form-control {
         border-radius: 3em;
         width: 100%;
-        background-color: rgb(41, 41, 41);  
-        border-color: lightgreen;
-        margin-bottom: 1em;
+        background-color: rgb(41, 41, 41);
+        border-color: #13d664;
+        color: white;
     }
-    
+
+    input[type=text]:focus {
+        background-color: rgb(41, 41, 41);
+        color: white;
+    }
+
+    input[type=email]:focus {
+        background-color: rgb(41, 41, 41);
+        color: white;
+    }
+
+    input[type=password]:focus {
+        background-color: rgb(41, 41, 41);
+        color: white;
+    }
+
+    select:focus {
+        background-color: rgb(41, 41, 41);
+        color: white;
+    }
+
+    label {
+        font-size: 0.7em;
+        margin-top: 1em;
+    }
+
+    .errors {
+        color: red;
+        font-family: cursive;
+    }
+
+    #searchQueryInput {
+        width: 100%;
+        height: 2.8rem;
+        background: #f5f5f5;
+        outline: none;
+        border: none;
+        border-radius: 1.625rem;
+        padding: 0 3.5rem 0 1.5rem;
+        font-size: 1rem;
+    }
+
+    #searchQuerySubmit {
+        width: 3.5rem;
+        height: 2.8rem;
+        margin-left: -3.5rem;
+        background: none;
+        border: none;
+        outline: none;
+    }
+
+    #searchQuerySubmit:hover {
+        cursor: pointer;
+    }
+    .searchBar {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-5 mx-auto">
-        <div class="header">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                  <a class="navbar-brand" href="#">Fanconvo</a>
-                  <div>
-                    <ul style="display: flex;" class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
-                        <a style="text-decoration: none; color: white; font-size: 0.7em;" class="nav-link" href="#">Sign Up</a>
-                      </li>
-                      <li class="nav-item">
-                        <a style="text-decoration: none; color: white; font-size: 0.7em" class="nav-link" href="#">Login</a>
-                      </li>
-                    </ul>
-                  </div>
+            <div class="header mb-3">
+                <nav class="navbar navbar-expand-lg" style="display: flex; justify-content: space-between;">
+                    <h1 style="color: #13d664; font-family: 'Poppins', sans-serif;">Fanconvo</h1>
+                    <div>
+                        <ul style="display: flex;" class="navbar-nav mb-2 mb-lg-0">
+                            <a style="text-decoration: none; color: white; font-size: 0.7em;" class="nav-link"
+                                href="#">Sign Up</a>
+                            <a style="text-decoration: none; color: white; font-size: 0.7em" class="nav-link"
+                                href="#">Login</a>
+                        </ul>
+                    </div>
+                </nav>
+                <div style="font-size: 0.8em;" class="text-white">A marketplace for conversations, mentorship and
+                    performance</div>
+                <div class="text-white mt-3">Search New Talent <input type="text"
+                        style="border-radius: 2em;background-color: black; border-color: #13d664; margin-left: 1em;"><i
+                        style="color: #13d664;" class="bi bi-search"></i></div>
+
+
+                <div class="searchBar">
+                    <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" />
+                    <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#666666"
+                                d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                        </svg>
+                    </button>
                 </div>
-              </nav>
+
+
+            </div>
+            <div class="form-div"
+                style="background-color: rgb(41, 41, 41); border-radius: 1em; padding-left: 20%; padding-right: 20%; padding-top: 2em; padding-bottom: 2em;">
+                <div class="container">
+
+                    <div class="buttons rounded-pill p-1"
+                        style="background-color: black; width: fit-content; margin: 0 auto; display: flex;">
+                        <a type="button" onclick="getFanForm()" id="fan-button"
+                            style="background-color: #13d664; font-size: 0.7em;" class="btn rounded-pill text-white">FAN
+                            SIGNUP</a>
+                        <a type="button" onclick="getTalentForm()" id="talent-button" style="font-size: 0.7em;"
+                            class="btn rounded-pill text-white">TALENT SIGNUP</a>
+                    </div>
+                    <div id="headline" class="h5 text-white text-center mt-5">CREATE YOUR FAN ACCOUNT</div>
+                    <form class="text-white" id="fan-form" style="margin-top: 3em;">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="first-name">First name*</label>
+                            <input type="text" class="form-control" placeholder="First name" name="fanFirstname"
+                                id="fanFirstname" maxlength="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last name*</label>
+                            <input type="text" class="form-control" placeholder="Last name" id="fanLastname"
+                                name=fanLastname maxlength="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username*</label>
+                            <small style="display: none;" id="fan-error" class="text-danger">This username already
+                                exists</small>
+                            <input type="text" class="form-control" placeholder="Username" id="fanUsername"
+                                name="fanUsername">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" class="form-control" placeholder="Email" id="fanEmail" name="fanEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">Timezone*</label>
+                            <select class="form-control text-white" name="fanTimezone" id="fanTimezone" required>
+                                <option value="PST8PDT-6am">PST8PDT-6am</option>
+                                <option value="PST8PDT-6am">PST8PDT-6am</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password*</label>
+                            <input type="password" class="form-control" id="fanPassword" name="fanPassword"
+                                placeholder="Password" maxlength="18" minlength="8" required>
+                        </div>
+                        <div class="row">
+                            <div style="justify-content: center;">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input style="background-color: #13d664;" name="fanCheckbox"
+                                            class="form-check-input" type="checkbox" required> I agree to the <span
+                                            style="color: #13d664;">Terms and Conditions</span>
+                                    </label>
+                                </div>
+                                <button type="button" onclick="fanSignup()"
+                                    style="background-color: #13d664; width: 70%" class="btn rounded-pill">SIGN
+                                    UP</button> <br>
+                                <small style="font-size: 0.7em; ">Already have an account? <span
+                                        style="color: #13d664;">Login</span></small>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!-- talent form -->
+                    <form class="text-white" id="talent-form" style="display: none; margin-top: 3em;">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="first-name">First name*</label>
+                            <input type="text" class="form-control" placeholder="First name" name="talentFirstname"
+                                id="talentFirstname" maxlength="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last name*</label>
+                            <input type="text" class="form-control" placeholder="Last name" id="talentLastname"
+                                name=talentLast-name maxlength="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username*</label>
+                            <small style="display: none;" id="talent-error" class="text-danger">This username already
+                                exists</small>
+                            <input type="text" class="form-control" placeholder="Username" id="talentUsername"
+                                name="talentUsername" maxlength="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" class="form-control" placeholder="Email" id="talentEmail"
+                                name="talentEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">Timezone*</label>
+                            <select class="form-control text-white" name="talentTimezone" id="talentTimezone" required>
+                                <option value="PST8PDT-6am">PST8PDT-6am</option>
+                                <option value="PST8PDT-6am">PST8PDT-6am</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password*</label>
+                            <input type="password" class="form-control" id="talentPassword" name="talentPassword"
+                                placeholder="Password" maxlength="18" minlength="8" required>
+                        </div>
+                        <div class="row">
+                            <div style="justify-content: center;">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input style="background-color: #13d664;" name="talentCheckbox"
+                                            class="form-check-input" type="checkbox" required> I agree to the <span
+                                            style="color: #13d664;">Terms and Conditions</span>
+                                    </label>
+                                </div>
+                                <button type="button" onclick="talentSignup()"
+                                    style="background-color: #13d664; width: 70%" class="btn rounded-pill">SIGN
+                                    UP</button> <br>
+                                <small style="font-size: 0.7em; ">Already have an account? <span
+                                        style="color: #13d664;">Login</span></small>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-div">
+                <div class="row">
+                    <div class="col-5">
+                        <h1 style="color: #13d664;font-family: 'Poppins', sans-serif;">Fanconvo</h1>
+                    </div>
+                    <div class="col-3">
+                        <small style="font-size: small;">How fanconvo works?</small>
+                    </div>
+                    <div class="col-2">
+                        <small style="font-size: small;">Terms of use</small>
+
+                    </div>
+                    <div class="col-2">
+                        <small style="font-size: small;">Contact Us</small>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <small style="font-size: small;">© 2020 fanconvo</small>
+            </div>
         </div>
-        <div class="form-div" style="background-color: rgb(41, 41, 41); border-radius: 1em; padding-left: 20%; padding-right: 20%; padding-top: 2em;">
-            <div class="container">
-                
-            <div class="buttons rounded-pill p-1" style="background-color: black; width: fit-content; margin: 0 auto; display: flex;">
-                <a type="button" onclick="getFanForm()" id="fan-button" style="background-color: lightgreen; font-size: 0.7em;" class="btn rounded-pill text-white">FAN SIGNUP</a>
-                <a type="button" onclick="getTalentForm()" id="talent-button" style="font-size: 0.7em;" class="btn rounded-pill text-white">TALENT SIGNUP</a>
-            </div>
-            <div id="headline" class="h5 text-white text-center mt-5">CREATE YOUR FAN ACCOUNT</div>
-            <form class="text-white" id="fan-form" method="POST" style="margin-top: 3em;" action="{% url 'fan-sign-up' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="first-name">First name*</label>
-                  <input type="text" class="form-control" placeholder="First name" name="first-name" id="first-name" maxlength="10" required>
-                </div>
-                <div class="form-group">
-                  <label for="last-name">Last name*</label>
-                  <input type="text" class="form-control" placeholder="Last name" id="last-name" name=last-name maxlength="10" required>
-                </div>
-                <div class="form-group">
-                    <label for="username">Username*</label>
-                    {% if messages %}
-                    {% for message in messages %}
-                    <small class="text-danger">{{ message }}</small>
-                    {% endfor %}
-                {% endif %}
-                    <input type="text" class="form-control" placeholder="Username" id="username" name=username maxlength="20" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email*</label>
-                    <input type="email" class="form-control" placeholder="Email" id="email" name=email required>
-                  </div>
-                  <div class="form-group">
-                    <label for="timezone">Timezone*</label>
-                    <select class="form-control text-white" name="timezone" id="timezone" required>
-                    <option value="PST8PDT-6am">PST8PDT-6am</option>
-                    <option value="PST8PDT-6am">PST8PDT-6am</option>
-                    </select>
-                  </div>
-                  <!-- <select name="timezone">
-                    {% for tz in timezones %}
-                    <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Set"> -->
-                  <div class="form-group">
-                    <label for="password">Password*</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="18" minlength="8" required>
-                  </div>
-                <div class="form-group form-check">
-                  <label class="form-check-label text-center">
-                    <input class="form-check-input" style="background-color: lightgreen;" type="checkbox" required> I agree to the <span style="color: green;">Terms and Conditions</span>
-                  </label>
-                </div> 
-                <button type="submit" style="background-color: lightgreen;" class="btn rounded-pill">SIGN UP</button> <br>
-                <small>Already have an account? <span>Login</span></small>
-              </form>
-              <form class="text-white" id="talent-form" style="display: none; margin-top: 3em;" method="POST" action="{% url 'talent-sign-up' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="first-name">First name*</label>
-                  <input type="text" class="form-control" placeholder="First name" name="first-name" id="first-name" maxlength="10" required>
-                </div>
-                <div class="form-group">
-                  <label for="last-name">Last name*</label>
-                  <input type="text" class="form-control" placeholder="Last name" id="last-name" name=last-name maxlength="10" required>
-                </div>
-                <div class="form-group">
-                    <label for="username">Username*</label>
-                    <input type="text" class="form-control" placeholder="Username" id="username" name=username maxlength="20" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email*</label>
-                    <input type="email" class="form-control" placeholder="Email" id="email" name=email required>
-                  </div>
-                  <div class="form-group">
-                    <label for="timezone">Timezone*</label>
-                    <select class="form-control text-white" name="timezone" id="timezone" required>
-                    <option value="PST8PDT-6am">PST8PDT-6am</option>
-                    <option value="PST8PDT-6am">PST8PDT-6am</option>
-                    </select>
-                  </div>
-                  <!-- <select name="timezone">
-                    {% for tz in timezones %}
-                    <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Set"> -->
-                  <div class="form-group">
-                    <label for="password">Password*</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="18" minlength="8" required>
-                  </div>
-                  <div style="align-items: center;">
-                <div class="form-group form-check text-center">
-                  <label class="form-check-label">
-                    <input style="background-color: lightgreen;" class="form-check-input" type="checkbox" required> I agree to the <span style="color: green;">Terms and Conditions</span>
-                  </label>
-                </div>
-                <button type="submit" style="background-color: lightgreen;" class="btn rounded-pill">SIGN UP</button> <br>
-                <small>Already have an account? <span>Login</span></small>
-            </div>
-        </div>
-              </form>
-            </div>
     </div>
-</div>
 </div>
 {% endblock %}
 {% block script %}
@@ -152,8 +260,8 @@
     function getFanForm() {
         $('#talent-form').hide()
         $('#fan-form').show()
-        $('#fan-button').css('background-color', 'lightgreen')  
-        $('#talent-button').css('background-color', 'lightgreen')
+        $('#fan-button').css('background-color', '#13d664')
+        $('#talent-button').css('background-color', '#13d664')
         $('#talent-button').css('background-color', 'black')
 
         $('#headline').html('CREATE YOUR FAN ACCOUNT')
@@ -161,9 +269,177 @@
     function getTalentForm() {
         $('#fan-form').hide()
         $('#talent-form').show()
-        $('#talent-button').css('background-color', 'lightgreen')
+        $('#talent-button').css('background-color', '#13d664')
         $('#fan-button').css('background-color', 'black')
         $('#headline').html('CREATE YOUR TALENT ACCOUNT')
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#fan-form").validate({
+            errorClass: 'errors',
+            rules: {
+                fanFirstname: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                },
+                fanLastname: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                },
+                fanUsername: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                },
+                fanEmail: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 40
+                },
+                fanPassword: {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 20
+                },
+                fanTimezone: {
+                    required: true
+                },
+                fanCheckbox: {
+                    required: true
+                }
+            },
+            messages: {
+                fanFirstname: {
+                    required: "Please type First Name",
+                },
+                fanCheckbox: {
+                    required: "Please check box"
+                }
+            }
+        });
+    });
+    function fanSignup() {
+        let isvalid = $('#fan-form').valid();
+        if (isvalid) {
+            let fanFirstname = $('#fanFirstname').val();
+            let fanLastname = $('#fanLastname').val();
+            let fanUsername = $('#fanUsername').val();
+            let fanEmail = $('#fanEmail').val();
+            let fanPassword = $('#fanPassword').val();
+            let fanTimezone = $('#fanTimezone').val();
+            let data = {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'fanFirstname': fanFirstname,
+                'fanLastname': fanLastname,
+                'fanUsername': fanUsername,
+                'fanEmail': fanEmail,
+                'fanPassword': fanPassword,
+                'fanTimezone': fanTimezone
+            };
+            console.log(data)
+            $.ajax({
+                url: '/fan-sign-up/',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'false') {
+                        $('#fan-error').show()
+                    }
+                    if (data == 'true') {
+                        window.alert('Form submitted successfully')
+                        window.location.reload()
+                    }
+                }
+            })
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#talent-form").validate({
+            errorClass: 'errors',
+            rules: {
+                talentFirstname: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                },
+                talentLastname: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                },
+                talentUsername: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 20
+                },
+                talentEmail: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 40
+                },
+                telentPassword: {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 20
+                },
+                talentTimezone: {
+                    required: true
+                },
+                talentCheckbox: {
+                    required: true
+                }
+            },
+            messages: {
+                talentFirstname: {
+                    required: "Please type First Name",
+                },
+                talentCheckbox: {
+                    required: "Please check box"
+                }
+            }
+        });
+    });
+    function talentSignup() {
+        let isvalid = $('#talent-form').valid();
+        if (isvalid) {
+            let talentFirstname = $('#talentFirstname').val();
+            let talentLastname = $('#talentLastname').val();
+            let talentUsername = $('#talentUsername').val();
+            let talentEmail = $('#talentEmail').val();
+            let talentPassword = $('#talentPassword').val();
+            let talentTimezone = $('#talentTimezone').val();
+            let data = {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'talentFirstname': talentFirstname,
+                'talentLastname': talentLastname,
+                'talentUsername': talentUsername,
+                'talentEmail': talentEmail,
+                'talentPassword': talentPassword,
+                'talentTimezone': talentTimezone
+            };
+            console.log(data)
+            $.ajax({
+                url: '/talent-sign-up/',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'false') {
+                        $('#talent-error').show()
+                    }
+                    if (data == 'true') {
+                        window.alert('Form submitted successfully')
+                        window.location.reload()
+                    }
+                }
+            })
+        }
     }
 </script>
 {% endblock %}

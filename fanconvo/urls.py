@@ -15,8 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Fanconvo API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
+
+    #REST URLS
+    path('api/user/', include('user.api.urls', 'user_api')),
+
+    #SWAGGER 
+    path('api-view/', schema_view),
 ]
