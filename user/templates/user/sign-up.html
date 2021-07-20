@@ -41,8 +41,7 @@
                     <div id="headline" class="h5 text-white text-center mt-5">CREATE YOUR FAN ACCOUNT</div>
                     
                     <!-- Fan account form starts -->
-                    <form class="text-white" id="fan-form" style="margin-top: 3em;">
-                        {% csrf_token %}
+                    <form class="text-white" id="fan-form" style="margin-top: 3em;"> {% csrf_token %}
                         <div class="form-group">
                             <label for="first-name">First name*</label>
                             <input type="text" class="form-control" placeholder="First name" name="fanFirstname"
@@ -95,7 +94,6 @@
                     <!-- fan form ends -->
                     <!-- talent form starts -->
                     <form class="text-white" id="talent-form" style="display: none; margin-top: 3em;">
-                        {% csrf_token %}
                         <div class="form-group">
                             <label for="first-name">First name*</label>
                             <input type="text" class="form-control" placeholder="First name" name="talentFirstname"
@@ -174,4 +172,83 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    //====== fan signup ajax======
+function fanSignup() {
+    let isvalid = $('#fan-form').valid();
+    if (isvalid) {
+        let fanFirstname = $('#fanFirstname').val();
+        let fanLastname = $('#fanLastname').val();
+        let fanUsername = $('#fanUsername').val();
+        let fanEmail = $('#fanEmail').val();
+        let fanPassword = $('#fanPassword').val();
+        let fanTimezone = $('#fanTimezone').val();
+        var data = {
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+            'fanFirstname': fanFirstname,
+            'fanLastname': fanLastname,
+            'fanUsername': fanUsername,
+            'fanEmail': fanEmail,
+            'fanPassword': fanPassword,
+            'fanTimezone': fanTimezone
+        };
+        console.log(data)
+        $.ajax({
+            url: "/fan-sign-up/",
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if (data == 'false') {
+                    $('#fan-error').show()
+                }
+                if (data == 'true') {
+                    window.alert('Form submitted successfully')
+                    window.location.reload()
+                }
+            }
+        })
+    }
+}
+</script>
+<script>
+    // ====talent signup ajax====
+function talentSignup() {
+    let isvalid = $('#talent-form').valid();
+    if (isvalid) {
+        let talentFirstname = $('#talentFirstname').val();
+        let talentLastname = $('#talentLastname').val();
+        let talentUsername = $('#talentUsername').val();
+        let talentEmail = $('#talentEmail').val();
+        let talentPassword = $('#talentPassword').val();
+        let talentTimezone = $('#talentTimezone').val();
+        let data = {
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'talentFirstname': talentFirstname,
+            'talentLastname': talentLastname,
+            'talentUsername': talentUsername,
+            'talentEmail': talentEmail,
+            'talentPassword': talentPassword,
+            'talentTimezone': talentTimezone
+        };
+        $.ajax({
+            url: '/talent-sign-up/',
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if (data == 'false') {
+                    $('#talent-error').show()
+                }
+                if (data == 'true') {
+                    window.alert('Form submitted successfully')
+                    window.location.reload()
+                }
+            }
+        })
+    }
+}
+</script>
 {% endblock %}

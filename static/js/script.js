@@ -65,44 +65,6 @@ $(document).ready(function () {
     });
 });
 
-//====== fan signup ajax======
-function fanSignup() {
-    let isvalid = $('#fan-form').valid();
-    if (isvalid) {
-        let fanFirstname = $('#fanFirstname').val();
-        let fanLastname = $('#fanLastname').val();
-        let fanUsername = $('#fanUsername').val();
-        let fanEmail = $('#fanEmail').val();
-        let fanPassword = $('#fanPassword').val();
-        let fanTimezone = $('#fanTimezone').val();
-        let data = {
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-            'fanFirstname': fanFirstname,
-            'fanLastname': fanLastname,
-            'fanUsername': fanUsername,
-            'fanEmail': fanEmail,
-            'fanPassword': fanPassword,
-            'fanTimezone': fanTimezone
-        };
-        console.log(data)
-        $.ajax({
-            url: '/fan-sign-up/',
-            method: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (data) {
-                if (data == 'false') {
-                    $('#fan-error').show()
-                }
-                if (data == 'true') {
-                    window.alert('Form submitted successfully')
-                    window.location.reload()
-                }
-            }
-        })
-    }
-}
-
 //  =====Talent form validation ==== //
 $(document).ready(function () {
     $("#talent-form").validate({
@@ -152,40 +114,4 @@ $(document).ready(function () {
 });
 
 
-// ====talent signup ajax====
-function talentSignup() {
-    let isvalid = $('#talent-form').valid();
-    if (isvalid) {
-        let talentFirstname = $('#talentFirstname').val();
-        let talentLastname = $('#talentLastname').val();
-        let talentUsername = $('#talentUsername').val();
-        let talentEmail = $('#talentEmail').val();
-        let talentPassword = $('#talentPassword').val();
-        let talentTimezone = $('#talentTimezone').val();
-        let data = {
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-            'talentFirstname': talentFirstname,
-            'talentLastname': talentLastname,
-            'talentUsername': talentUsername,
-            'talentEmail': talentEmail,
-            'talentPassword': talentPassword,
-            'talentTimezone': talentTimezone
-        };
-        console.log(data)
-        $.ajax({
-            url: '/talent-sign-up/',
-            method: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (data) {
-                if (data == 'false') {
-                    $('#talent-error').show()
-                }
-                if (data == 'true') {
-                    window.alert('Form submitted successfully')
-                    window.location.reload()
-                }
-            }
-        })
-    }
-}
+
